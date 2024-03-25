@@ -27,6 +27,63 @@ function Leaderboard() {
     fetchVolunteers();
   }, []);
 
+  const getGrandBandra = (volunteer) => {
+    return volunteer.eventsattained.reduce((total, event) => {
+      if (event && event.eventcategory === "AREA BASED PROJECT 1 (BANDRA)" && event.hoursalloted) {
+        const parsedHours = parseInt(event.hoursalloted, 10);
+        return total + (isNaN(parsedHours) ? 0 : parsedHours);
+      } else {
+        return total;
+      }
+    }, 0);
+  };
+  
+  const getGrandAndheri = (volunteer) => {
+    return volunteer.eventsattained.reduce((total, event) => {
+      if (event && event.eventcategory === "AREA BASED PROJECT 2 (ANDHERI)" && event.hoursalloted) {
+        const parsedHours = parseInt(event.hoursalloted, 10);
+        return total + (isNaN(parsedHours) ? 0 : parsedHours);
+      } else {
+        return total;
+      }
+    }, 0);
+  };
+  
+  const getGrandCollege = (volunteer) => {
+    return volunteer.eventsattained.reduce((total, event) => {
+      if (event && event.eventcategory === "COLLEGE BASED ACTIVITY" && event.hoursalloted) {
+        const parsedHours = parseInt(event.hoursalloted, 10);
+        return total + (isNaN(parsedHours) ? 0 : parsedHours);
+      } else {
+        return total;
+      }
+    }, 0);
+  };
+  
+  const getGrandMU = (volunteer) => {
+    return volunteer.eventsattained.reduce((total, event) => {
+      if (event && event.eventcategory === "MUMBAI UNIVERSITY EVENT" && event.hoursalloted) {
+        const parsedHours = parseInt(event.hoursalloted, 10);
+        return total + (isNaN(parsedHours) ? 0 : parsedHours);
+      } else {
+        return total;
+      }
+    }, 0);
+  };
+
+  const getDeduction = (volunteer) => {
+    return volunteer.eventsattained.reduce((total, event) => {
+      if (event && event.eventcategory === "DEDUCTION*" && event.hoursalloted) {
+        const parsedHours = parseInt(event.hoursalloted, 10);
+        return total + (isNaN(parsedHours) ? 0 : parsedHours);
+      } else {
+        return total;
+      }
+    }, 0);
+  };
+
+
+  
   const getGrandTotal = (volunteer) => {
     return volunteer.eventsattained.reduce((total, event) => {
       if (event && event.hoursalloted) {
@@ -59,6 +116,11 @@ function Leaderboard() {
             <th>Position</th>
             <th>Serial Number</th>
             <th>Name</th>
+            <th>Grand Total Bandra</th>
+            <th>Grand Total Andheri</th>
+            <th>Grand Total College</th>
+            <th>Grand Total MU</th>
+            <th>Deduction</th>
             <th>Grand Total Hours</th>
           </tr>
         </thead>
@@ -68,6 +130,11 @@ function Leaderboard() {
               <td>{index + 1}</td>
               <td>{volunteer.srno}</td>
               <td>{volunteer.name}</td>
+              <td>{getGrandBandra(volunteer)}</td>
+              <td>{getGrandAndheri(volunteer)}</td>
+              <td>{getGrandCollege(volunteer)}</td>
+              <td>{getGrandMU(volunteer)}</td>
+              <td>{getDeduction(volunteer)}</td>
               <td>{getGrandTotal(volunteer)}</td>
             </tr>
           ))}
